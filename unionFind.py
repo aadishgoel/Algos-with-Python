@@ -24,7 +24,7 @@ class UnionFind2:
     
     def find(self, i):
         if self.parent[i] != i:
-            return find(self.parent[i])
+            return self.find(self.parent[i])
         return i
      
     def union(self, i,j): 
@@ -40,16 +40,13 @@ class UnionFind3:
     
     def find(self, i):
         if self.parent[i]!=i:
-            self.parent[i] = find(self.parent[i])
+            self.parent[i] = self.find(self.parent[i])
         return self.parent[i]
     
     def union(self, i,j):
-        u = self.find(i)
-        v = self.find(j)
-        if self.rank[u]<self.rank[v]:
-            self.parent[u]=v
-        elif self.rank[v]<self.rank[u]:
-            self.parent[v]=u
+        u,v = self.find(i), self.find(j)
+        if   self.rank[u]<self.rank[v]: self.parent[u]=v
+        elif self.rank[v]<self.rank[u]: self.parent[v]=u
         else:
             self.parent[v]=u
             self.rank[u]+=1
